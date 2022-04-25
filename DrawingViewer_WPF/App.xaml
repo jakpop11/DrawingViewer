@@ -1,0 +1,291 @@
+﻿<Application x:Class="DrawingViewer_WPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:DrawingViewer_WPF"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+
+        <!-- Title Label -->
+        <Style x:Key="TitleLabel" TargetType="Label" >
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="FontFamily" Value="Console" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="#e11106" />
+        </Style>
+
+        <!-- Name Label -->
+        <Style x:Key="NameLabel" TargetType="Label" >
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="FontFamily" Value="Console" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="#a9272b" />
+        </Style>
+
+        <!-- Text -->
+        <Style x:Key="Text" TargetType="TextBlock" >
+            <Setter Property="Margin" Value="0,5,2,0" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="FontFamily" Value="Console" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="#a9272b" />
+        </Style>
+
+        <!-- Tree Project -->
+        <Style x:Key="TreeProject" TargetType="TextBlock" >
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="FontFamily" Value="Console" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="#a9272b" />
+        </Style>
+        
+        <!-- Tree Item -->
+        <Style x:Key="TreeItem" TargetType="TextBlock" >
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="FontFamily" Value="Console" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="#a9272b" />
+        </Style>
+        
+        <!-- Button -->
+        <Style x:Key="Button" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Width" Value="Auto" />
+            <Setter Property="Height" Value="Auto" />
+            <Setter Property="Padding" Value="10,1" />
+            <Setter Property="FontFamily" Value="Console" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Foreground" Value="#a9272b" />
+            <Setter Property="Background" Value="#191925" />
+            <Setter Property="BorderBrush" Value="#1a080b" />
+        </Style>
+
+        <!-- Radio Button -->
+        <Style x:Key="RadioButton" TargetType="RadioButton" >
+            
+        </Style>
+        
+        <!-- Open Button -->
+        <Style x:Key="OpenButton" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Width" Value="Auto" />
+            <Setter Property="Height" Value="Auto" />
+            <Setter Property="Padding" Value="10,1" />
+            <Setter Property="FontFamily" Value="Console" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="#e11106" />
+            <Setter Property="Background" Value="#570911" />
+            <Setter Property="BorderBrush" Value="#1a080b" />
+        </Style>
+        
+        <!-- Menu Button -->
+        <Style x:Key="MenuButton" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Width" Value="Auto" />
+            <Setter Property="Height" Value="Auto" />
+            <Setter Property="Padding" Value="10,1" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="FontFamily" Value="Console" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="#e11106" />
+            <Setter Property="Background" Value="#570911" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <!-- Slider -->
+        <Style x:Key="Slider" TargetType="Slider" >
+            <Setter Property="Value" Value="1.0" />
+            <Setter Property="Minimum" Value="0.1" />
+            <Setter Property="Maximum" Value="8.0" />
+            <Setter Property="SmallChange" Value="0.1" />
+            <Setter Property="LargeChange" Value="0.5" />
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="Width" Value="300" />
+            <Setter Property="MinWidth" Value="80" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="TickPlacement" Value="Both" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="#1a080b" />
+            <Setter Property="Background" Value="{x:Null}" />
+        </Style>
+        
+        <!-- Custom Slider -->
+        <RadialGradientBrush x:Key="BorderGradient" GradientOrigin="0.5,0.5" 
+                             Center="0.5,0.5" RadiusX="0.8" RadiusY="0.5" >
+            <GradientStop Color="#1a080b" Offset="0.9" />
+            <GradientStop Color="#e11106" Offset="0.3" />
+        </RadialGradientBrush>
+        <Style x:Key="CustomThumb" TargetType="Thumb">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Rectangle Fill="#191925" Stroke="#1a080b" 
+                                   Height="16" Width="10" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="SliderRepeatButtonStyle" TargetType="RepeatButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Rectangle Fill="Transparent" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="CustomSlider" TargetType="Slider">
+            <Setter Property="Value" Value="1.0" />
+            <Setter Property="Minimum" Value="0.1" />
+            <Setter Property="Maximum" Value="8.0" />
+            <Setter Property="SmallChange" Value="0.1" />
+            <Setter Property="LargeChange" Value="0.5" />
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="Width" Value="300" />
+            <Setter Property="MinWidth" Value="80" />
+            <Setter Property="Height" Value="16" />
+            <Setter Property="TickPlacement" Value="Both" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,3" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Slider" >
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TickBar x:Name="TopTick" Visibility="Collapsed" 
+                                         Fill="{TemplateBinding Foreground}" Placement="Top" 
+                                         Height="4" Grid.Row="0" />
+                                <TickBar x:Name="BottomTick" Visibility="Collapsed" 
+                                         Fill="{TemplateBinding Foreground}" Placement="Bottom" 
+                                         Height="4" Grid.Row="0" />
+                                <Border x:Name="TrackBackground" 
+                                        BorderThickness="0" CornerRadius="1" Margin="5,0" VerticalAlignment="Center" 
+                                        Height="8" Grid.Row="1" >
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="BorderGradient.png" Stretch="Fill" />
+                                    </Border.Background>
+                                    <Canvas Margin="-6,-1">
+                                        <Rectangle x:Name="PART_SelectionRange"  Visibility="Hidden" 
+                                                   Height="4" StrokeThickness="1" 
+                                                   Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" 
+                                                   Fill="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                                    </Canvas>
+                                </Border>
+                                <Track x:Name="PART_Track" Grid.Row="1" >
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}" 
+                                                      Style="{StaticResource SliderRepeatButtonStyle}" />
+                                    </Track.DecreaseRepeatButton>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}" 
+                                                      Style="{StaticResource SliderRepeatButtonStyle}" />
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb x:Name="Thumb" Style="{StaticResource CustomThumb}" Background="Black" />
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Image -->
+        <Style x:Key="Image" TargetType="Image">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <!-- Border -->
+        <Style x:Key="Border" TargetType="Border">
+            <Setter Property="Padding" Value="4,2" />
+            <Setter Property="Background" Value="{x:Null}" />
+        </Style>
+
+        <!-- Content Border -->
+        <Style x:Key="ContentBorder" TargetType="Border">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="Padding" Value="4,2" />
+            <Setter Property="Background" Value="#1a080b" />
+            <Setter Property="Cursor" Value="Cross" />
+        </Style>
+
+        <!-- Scroll Viewer -->
+        <Style x:Key="ScrollViewer" TargetType="ScrollViewer" >
+            <Setter Property="HorizontalScrollBarVisibility" Value="Hidden" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
+        </Style>
+
+        <!-- Menu Scroll Viewer -->
+        <Style x:Key="MenuScrollViewer" TargetType="ScrollViewer" >
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Width" Value="Auto" />
+            <Setter Property="MaxHeight" Value="200" />
+            <Setter Property="Margin" Value="10,1,2,2" />
+            <Setter Property="Padding" Value="0,0,2,0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        </Style>
+        
+        <!-- Tree Viewe -->
+        <Style x:Key="TreeView" TargetType="TreeView" >
+            <Setter Property="Margin" Value="0,0,2,0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        
+        <!-- Stack Panel -->
+        <Style x:Key="StackPanel" TargetType="StackPanel" >
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Margin" Value="0,0,2,0" />
+        </Style>
+
+        <!-- SubMenu Panel-->
+        <Style x:Key="SubMenuPanel" TargetType="StackPanel" >
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Background" Value="#1a080b" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+        
+        <!-- Wrap Panel -->
+        <Style x:Key="WrapPanel" TargetType="WrapPanel" >
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Height" Value="Auto" />
+        </Style>
+    </Application.Resources>
+</Application>

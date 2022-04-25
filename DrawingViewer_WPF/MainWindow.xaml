@@ -1,0 +1,146 @@
+﻿<Window x:Class="DrawingViewer_WPF.MainWindow" x:Name="MainWindow1" 
+        SizeChanged="MainWindow1_SizeChanged" StateChanged="MainWindow1_StateChanged" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DrawingViewer_WPF"
+        xmlns:self="clr-namespace:DrawingViewer_WPF"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d" Closed="MainWindow1_Closed" 
+        Title="Drawing  Viewer - WPF app with .Net 4.6.1" Height="450" Width="800" 
+        Icon="DrawingViewer_Ico.ico" Background="#06070c">
+
+    <!-- Apps Main Space -->
+    <Grid Margin="5, 2, 5, 5" Background="#390a09">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="4*" />
+        </Grid.ColumnDefinitions>
+        
+        <!-- Manu Panel -->
+        <StackPanel Style="{StaticResource StackPanel}" Background="#191925">
+            
+            <!-- Border -->
+            <Border Height="10" Style="{StaticResource Border}" />
+
+            <!-- Welcoming Label -->
+            <Label x:Name="WelcomingLabel" 
+                   Style="{StaticResource TitleLabel}" 
+                   Content="Welcome in App!" />
+
+            <!-- Border -->
+            <Border Height="32" Style="{StaticResource Border}" />
+
+            <!-- File Openning Button -->
+            <Button x:Name="Button1" Click="Button1_Click" 
+                    Content="Open File" Style="{StaticResource OpenButton}" />
+            
+            <!-- Border -->
+            <Border Height="26" Style="{StaticResource Border}" />
+
+            <!-- Properties Menu -->
+            <Button x:Name="Btn_Properties" Click="Btn_Properties_Click" 
+                    Content="Properties" Style="{StaticResource MenuButton}" />
+            <StackPanel x:Name="StackPanel_Properties" Style="{StaticResource SubMenuPanel}" >
+                <ScrollViewer Style="{StaticResource MenuScrollViewer}" >
+                    <StackPanel Style="{StaticResource StackPanel}">
+                       
+                        <!-- File Details -->
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <WrapPanel Style="{StaticResource WrapPanel}">
+                                <Label Content="File name:" Style="{StaticResource NameLabel}"/>
+                                <TextBlock Name="NameLabel" Text="Empty" Style="{StaticResource Text}" />
+                            </WrapPanel>
+
+                            <WrapPanel Grid.Row="1" Style="{StaticResource WrapPanel}" >
+                                <Label Content="File path:" Style="{StaticResource NameLabel}" />
+                                <TextBlock Name="PathLabel" Text="Empty" Style="{StaticResource Text}" />
+                            </WrapPanel>
+                        </Grid>
+
+                        <!-- Test Content -->
+                        <TextBlock Name="Test" Text="Test content" 
+                                   Style="{StaticResource Text}" Padding="5" 
+                                   Visibility="Collapsed" />
+                    </StackPanel>
+                </ScrollViewer>
+            </StackPanel>
+
+            <!-- List Menu -->
+            <Button x:Name="Btn_List" Click="Btn_List_Click" 
+                    Content="List" Style="{StaticResource MenuButton}" />
+            <StackPanel x:Name="StackPanel_List" Style="{StaticResource SubMenuPanel}" >
+                <ScrollViewer Style="{StaticResource MenuScrollViewer}" >
+                    <TreeView Name="Tree" Style="{StaticResource TreeView}">
+                        <TreeView.Resources>
+                            <HierarchicalDataTemplate DataType="{x:Type self:Project}" 
+                                                      ItemsSource="{Binding Tasks}" >
+                                <WrapPanel Style="{StaticResource WrapPanel}" >
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource TreeProject}" />
+                                </WrapPanel>
+                            </HierarchicalDataTemplate>
+                            <DataTemplate DataType="{x:Type self:ProjectTask}" >
+                                <StackPanel Orientation="Horizontal" >
+                                    <RadioButton/>
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource TreeItem}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </TreeView.Resources>
+                    </TreeView>
+                </ScrollViewer>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource StackPanel}" 
+                            Margin="10,1,2,2">
+                    <Button x:Name="RBtn_Big" Click="RBtn_Big_Click" 
+                            Content="++" Width="40" Height="40" />
+                    <Button x:Name="RBtn_Small" Click="RBtn_Small_Click" 
+                            Content="+" Width="20" Height="20" />
+                </StackPanel>
+            </StackPanel>
+            
+        </StackPanel>
+
+        <!-- Content Grid -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Zoom Slider -->
+            <WrapPanel x:Name="ZoomPanel" Style="{StaticResource WrapPanel}" VerticalAlignment="Center" >
+                <Border Width="20" Style="{StaticResource Border}" />
+                <Label Content="Zoom:" Style="{StaticResource NameLabel}" VerticalAlignment="Center" />
+                <Button x:Name="ResetButton" Click="ResetButton_Click" Margin="5,5 "
+                        Content="Reset" FontSize="16" Style="{StaticResource Button}" />
+                <Slider Name="SliderZoom" Style="{StaticResource CustomSlider}" Width="300" />
+            </WrapPanel>
+
+            <!-- Main Content -->
+            <ScrollViewer Grid.Row="1" Style="{StaticResource ScrollViewer}" >
+
+                <!-- Canvas Image Viewer -->
+                <Border x:Name="Border1" Grid.Row="1" MouseWheel="Border1_MouseWheel" 
+                        MouseDown="Border1_MouseDown" MouseMove="Border1_MouseMove" 
+                        Style="{StaticResource ContentBorder}" >
+
+                    <!-- Transformable Canvas to show images -->
+                    <Canvas x:Name="Canvas1" >
+                        <Canvas.LayoutTransform>
+                            <ScaleTransform ScaleX="{Binding ElementName=SliderZoom, Path=Value}"
+                                            ScaleY="{Binding ElementName=SliderZoom, Path=Value}" />
+                        </Canvas.LayoutTransform>
+
+                        <!-- Image -->
+                        <Image x:Name="Image1" Style="{StaticResource Image}" />
+                    </Canvas>
+                </Border>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Window>
