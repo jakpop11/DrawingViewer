@@ -250,9 +250,7 @@ namespace DrawingViewer_WPF
 
 
 /* TO DO:
- * [^] - Fix Debug mode
- * [^] - Delete "List"
- * [^] - Delete remainings after List
+ * [ ] - Fix Interpolation of rendered Image to NearestNeighbor	
  * 
  * [ ] - Fix Slider style
  * [ ] - Add layer viewer
