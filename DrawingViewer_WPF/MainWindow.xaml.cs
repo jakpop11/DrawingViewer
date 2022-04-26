@@ -20,30 +20,6 @@ using System.IO.Compression;
 
 namespace DrawingViewer_WPF
 {
-    /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
-    /// </summary>
-
-    public class Project
-    {
-        public Project()
-        {
-            this.Tasks = new ObservableCollection<ProjectTask>();
-        }
-
-        public string Name { get; set; }
-
-        public string FilePath { get; set; }
-
-        public ObservableCollection<ProjectTask> Tasks { get; set; }
-    }
-
-    public class ProjectTask
-    {
-        public string Name { get; set; }
-
-    }
-
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -55,33 +31,14 @@ namespace DrawingViewer_WPF
                 WelcomingLabel.Content = "DebugMode ON!";
                 Test.Visibility = Visibility.Visible;
             }
-
-            List<Project> projects = new List<Project>();
-
-            Project project1 = new Project() { Name = "Panda" };
-            project1.Tasks.Add(new ProjectTask() { Name = "Foots" });
-            project1.Tasks.Add(new ProjectTask() { Name = "Ears" });
-            project1.Tasks.Add(new ProjectTask() { Name = "Fur" });
-            project1.Tasks.Add(new ProjectTask() { Name = "BackgroundwithRellyBigTrees" });
-            projects.Add(project1);
-
-            Project project2 = new Project() { Name = "DeepSeaMonsterWithSharpTooths" };
-            project2.Tasks.Add(new ProjectTask() { Name = "Head" });
-            project2.Tasks.Add(new ProjectTask() { Name = "Tooths" });
-            project2.Tasks.Add(new ProjectTask() { Name = "Forground" });
-            projects.Add(project2);
-
-            Tree.ItemsSource = projects;
         }
 
 #if DEBUG
         public static bool isDebug = true;
-        public static string resourcesDirectory =
-             @"C:\Users\jakpo\source\repos\DrawingViewer_WPF\Resources\";
+        public static string resourcesDirectory = System.IO.Directory.GetCurrentDirectory() + @"DrawingViewerTemp\";
 #else
         public static bool isDebug = false;
-        public static string resourcesDirectory =
-            @"C:\Projekty\TempFiles\";
+        public static string resourcesDirectory = System.IO.Path.GetTempPath() + @"DrawingViewerTemp\";
 #endif
 
 
@@ -127,11 +84,12 @@ namespace DrawingViewer_WPF
             Image1.Source = bitmap;
             NameLabel.Text = FileName;
             PathLabel.Text = FilePath;
+            SizeLabel.Text = $"{bitmap.PixelWidth} x {bitmap.PixelHeight}";
             Reset();
         }
 
         //// Browse files //// 
-        private void Button1_Click(object sender, RoutedEventArgs e)
+        private void OpenBtn_Click(object sender, RoutedEventArgs e)
         {
             //// Open Explorer ////
             OpenFileDialog openDlg = new OpenFileDialog
@@ -165,7 +123,7 @@ namespace DrawingViewer_WPF
 
         //// Pan & Zoom ////
         private Point Pos;
-        private void Border1_MouseDown(object sender, MouseButtonEventArgs e)
+        private void ContentBorder_MouseDown(object sender, MouseButtonEventArgs e)
         {
             //// Pan starting position ////
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -181,7 +139,7 @@ namespace DrawingViewer_WPF
         }
 
         //// Pan (hand) ////
-        private void Border1_MouseMove(object sender, MouseEventArgs e)
+        private void ContentBorder_MouseMove(object sender, MouseEventArgs e)
         {
             Point nPos;
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -194,7 +152,7 @@ namespace DrawingViewer_WPF
         }
 
         //// Zoom ////
-        private void Border1_MouseWheel(object sender, MouseWheelEventArgs e)
+        private void ContentBorder_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             e.Handled = true;
             if (e.Delta > 0) { SliderZoom.Value += SliderZoom.SmallChange; }
@@ -271,7 +229,6 @@ namespace DrawingViewer_WPF
         private void HideSubMenus()
         {
             StackPanel_Properties.Visibility = Visibility.Collapsed;
-            StackPanel_List.Visibility = Visibility.Collapsed;
         }
 
         private void Btn_Properties_Click(object sender, RoutedEventArgs e)
@@ -286,52 +243,23 @@ namespace DrawingViewer_WPF
             }
         }
 
-        private void Btn_List_Click(object sender, RoutedEventArgs e)
-        {
-            if(StackPanel_List.Visibility == Visibility.Collapsed)
-            {
-                StackPanel_List.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                StackPanel_List.Visibility = Visibility.Collapsed;
-            }
-        }
 
-        //// Add new Project to the List ////
-        private void RBtn_Big_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        //// Add new Item to the Project ////
-        private void RBtn_Small_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-
-        /* TO DO:
-         * -Add list view;
-         * -Add struct (name, file, childs);
-         * -Add methodes for loading and saving list;
-         * -Add sublist with round buttons;
-         * -Add methode for showing & hiding sublist;
-         * -Add dialog window with struct editor;
-         * -Add Buttons click events;
-         * -Add methodes for adding, deleting and moving items;
-         * -Add methode for list order changing;
-         * -Add methode for opening conected file;
-         * -Improve Pan;
-         * -Add Styles;
-         * -Fix Slider style;
-         * -Designe better UI;
-         * -
-         * -Add layer viewer;
-         * -
-         * -Add ToolTips;
-         * -Clear the code;
-         * -Transfer to mobile platform;
-         */
     }
 }
+
+
+
+/* TO DO:
+ * [^] - Fix Debug mode
+ * [^] - Delete "List"
+ * [^] - Delete remainings after List
+ * 
+ * [ ] - Fix Slider style
+ * [ ] - Add layer viewer
+ * 
+ * [ ] - Improve Pan
+ * [ ] - Designe better UI
+ * [ ] - Clear the code
+ * [ ] - Add comments
+ * [ ] - 
+ */
