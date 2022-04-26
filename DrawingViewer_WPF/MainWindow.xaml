@@ -33,7 +33,7 @@
             <Border Height="32" Style="{StaticResource Border}" />
 
             <!-- File Openning Button -->
-            <Button x:Name="Button1" Click="Button1_Click" 
+            <Button x:Name="OpenBtn" Click="OpenBtn_Click" 
                     Content="Open File" Style="{StaticResource OpenButton}" />
             
             <!-- Border -->
@@ -45,12 +45,13 @@
             <StackPanel x:Name="StackPanel_Properties" Style="{StaticResource SubMenuPanel}" >
                 <ScrollViewer Style="{StaticResource MenuScrollViewer}" >
                     <StackPanel Style="{StaticResource StackPanel}">
-                       
+
                         <!-- File Details -->
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
+                                <RowDefinition Height="0.5*" />
                             </Grid.RowDefinitions>
 
                             <WrapPanel Style="{StaticResource WrapPanel}">
@@ -62,6 +63,11 @@
                                 <Label Content="File path:" Style="{StaticResource NameLabel}" />
                                 <TextBlock Name="PathLabel" Text="Empty" Style="{StaticResource Text}" />
                             </WrapPanel>
+
+                            <WrapPanel Grid.Row="2" Style="{StaticResource WrapPanel}">
+                                <Label Content="Image Size:" Style="{StaticResource NameLabel}" />
+                                <TextBlock Name="SizeLabel" Text="Empty" Style="{StaticResource Text}"/>
+                            </WrapPanel>
                         </Grid>
 
                         <!-- Test Content -->
@@ -71,44 +77,12 @@
                     </StackPanel>
                 </ScrollViewer>
             </StackPanel>
-
-            <!-- List Menu -->
-            <Button x:Name="Btn_List" Click="Btn_List_Click" 
-                    Content="List" Style="{StaticResource MenuButton}" />
-            <StackPanel x:Name="StackPanel_List" Style="{StaticResource SubMenuPanel}" >
-                <ScrollViewer Style="{StaticResource MenuScrollViewer}" >
-                    <TreeView Name="Tree" Style="{StaticResource TreeView}">
-                        <TreeView.Resources>
-                            <HierarchicalDataTemplate DataType="{x:Type self:Project}" 
-                                                      ItemsSource="{Binding Tasks}" >
-                                <WrapPanel Style="{StaticResource WrapPanel}" >
-                                    <TextBlock Text="{Binding Name}" Style="{StaticResource TreeProject}" />
-                                </WrapPanel>
-                            </HierarchicalDataTemplate>
-                            <DataTemplate DataType="{x:Type self:ProjectTask}" >
-                                <StackPanel Orientation="Horizontal" >
-                                    <RadioButton/>
-                                    <TextBlock Text="{Binding Name}" Style="{StaticResource TreeItem}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </TreeView.Resources>
-                    </TreeView>
-                </ScrollViewer>
-                <StackPanel Orientation="Horizontal" Style="{StaticResource StackPanel}" 
-                            Margin="10,1,2,2">
-                    <Button x:Name="RBtn_Big" Click="RBtn_Big_Click" 
-                            Content="++" Width="40" Height="40" />
-                    <Button x:Name="RBtn_Small" Click="RBtn_Small_Click" 
-                            Content="+" Width="20" Height="20" />
-                </StackPanel>
-            </StackPanel>
-            
         </StackPanel>
 
         <!-- Content Grid -->
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -125,8 +99,8 @@
             <ScrollViewer Grid.Row="1" Style="{StaticResource ScrollViewer}" >
 
                 <!-- Canvas Image Viewer -->
-                <Border x:Name="Border1" Grid.Row="1" MouseWheel="Border1_MouseWheel" 
-                        MouseDown="Border1_MouseDown" MouseMove="Border1_MouseMove" 
+                <Border x:Name="ContentBorder" Grid.Row="1" MouseWheel="ContentBorder_MouseWheel" 
+                        MouseDown="ContentBorder_MouseDown" MouseMove="ContentBorder_MouseMove" 
                         Style="{StaticResource ContentBorder}" >
 
                     <!-- Transformable Canvas to show images -->
